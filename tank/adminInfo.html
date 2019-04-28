@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .wrapper {
+                height: 100%;
+                overflow: hidden;
+            }
+            .userName {
+                width: 300px;
+                margin: 50px auto;
+                display: flex;
+                align-items: center;
+            }
+
+            h2 {
+                font-size: 30px;
+                color: aqua;
+                margin-left: 20px;
+            }
+
+            .content {
+                position: relative;
+                height: 90%;
+            }
+
+            .sidebar > ul {
+                /* display: flex;
+                flex-direction: column; */
+                border: 2px solid black;
+                padding: 0;
+            }
+
+            /* .sidebar > div {
+                width: 200px;
+                height: 80px;
+                line-height: 80px;
+                font-size: 20px;
+                list-style-type: none;
+                text-align: center;
+                border-bottom: 2px solid black;
+            } */
+
+            ul > li {
+                width: 200px;
+                height: 80px;
+                line-height: 80px;
+                font-size: 20px;
+                list-style-type: none;
+                text-align: center;
+                border-bottom: 2px solid black;
+                border-right: 2px solid black;
+            }
+
+            .rightContent {
+                height: 408px;
+                transform: translate(204px, -262px)
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="userName">
+                <img src="./images/管理员.svg" alt="">
+                <h2>欢迎你！XXX</h2>
+            </div>
+            <div class="content">
+                <div class="sidebar">
+                    <ul>
+                        <li>管理用户</li>
+                        <li>管理排名</li>
+                        <li style="border-bottom: none">退出登录</li>
+                    </ul>
+                </div>
+                <div class="rightContent">
+
+                </div>
+            </div>
+        </div>
+        <script>
+            const rightContentDom = document.getElementsByClassName('rightContent')[0];
+            const contentDom = document.getElementsByClassName('content')[0];
+            const sidebarDom = document.getElementsByTagName('li')[0];
+            rightContentDom.style.width = (contentDom.offsetWidth - sidebarDom.offsetWidth - 4) + 'px';
+            console.log(rightContentDom.offsetWidth);
+
+            const funcArr = [handle1, handle2, handle3,]
+            const liDoms = document.getElementsByTagName('li');
+            for (let i = 0, len = liDoms.length; i < len; i++) {
+                liDoms[i].addEventListener('click', funcArr[i]);
+            }
+
+            /*******************函数分割线*********************************************************************************************/ 
+
+            function handle1(event) {
+                rightContentDom.innerHTML = `管理用户信息`
+            }
+
+            function handle2(event) {
+                rightContentDom.innerHTML = `管理排名`
+            }
+
+            function handle3(event) {
+                window.location.href='http://localhost:3000/logout'
+            }
+
+        </script>
+    </body>
+</html>
