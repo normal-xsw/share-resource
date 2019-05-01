@@ -6,10 +6,48 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <form action="login" method="post">
-            <input type="text">
-            <input type="password">
-            <input type="submit" value="登录">
+        <form>
+            <input type="text" name="username" id="username">
+            <input type="password" name="password" id="password">
+            <button type="submit" value="登录" id="submit">登录</button>
         </form>
     </body>
+    <script>
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const submit = document.getElementById('submit');
+
+        submit.addEventListener('click', () => {
+            let xhr = null;
+            const url = 'http://localhost:3000/dologin';
+            const params = {
+            username: username.value,
+            password: password.value,
+        }
+    
+            try {
+                xhr = new XMLHttpRequest();
+            } catch(e) {
+                xhr = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+
+            xhr.open('post', url, true);
+            // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded'); // 把传递的数据当做字符串url
+            xhr.setRequestHeader('content-type', 'application/json');
+            xhr.send(JSON.stringify(params));
+
+            xhr.onreadystatechange = function(){
+                console.log(xhr);
+                // debugger
+                if(xhr.readyState === 4) {
+                    console.log(xhr);
+                    // if (xhr.status === 200) {
+                    //     alert(xhr.responseText);
+                    // } else {
+                    //     // alert('error: ' + xhr.status);
+                    // }
+                }
+            }
+        })
+    </script>
 </html>

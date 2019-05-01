@@ -1,11 +1,21 @@
-const express = require('express');
+ const express = require('express');
 const session = require('express-session');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+const db = require('./modules/db');
 
 const app = express();
 
 // 静态啊文件托管
 app.use(express.static('public'));
+
+// 设置中间件，处理表单
+// parse application/x-www-form-urlencode
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application json
+app.use(bodyParser.json());
+
 
 // //配置虚拟目录 的静态web服务
 // app.use('/static',express.static('public'));
@@ -26,13 +36,53 @@ app.get('/', (req, res) => {
     readFile('login.html', res);
 })
 
-app.post('/login', (req, res) => {
-    req.session.user = {
-        name: 'zhangsan',
-        password: 123456,
-    }
-    console.log('登录成功');
-    res.redirect(301, 'http://localhost:3000/index');
+app.post('/dologin', (req, res) => {
+    console.log(req.body);
+
+    const username = req.body.username;
+    const password = req.body.password;
+
+    db.find('users', {name: username}, (err, data) => {
+        if (err) {
+            console.log('查询数据库失败');
+            res.status(200).json({data: '查询数据库失败'});
+            res.end();
+            return;
+        }
+
+        console.log(data);
+
+        if (data.length === 0) {
+            res.status(200);
+            res.json({data: '账户不存在'});
+            // res.json({data: '密码不正确'});
+            res.end();
+             return;
+        } else {
+            if (password !== data.password) {
+            res.status(200);
+            res.json({data: '密码不正确'});
+            res.json({data: '密码不正确'});
+            res.end();
+             return;
+            // res.redirect(301, 'http://localhost:3000');
+            } else {
+                req.session.user = {
+                    name: username,
+                    password: password,
+                }
+                console.log('登录成功');
+                res.redirect(301, 'http://localhost:3000/index');
+            }
+        }
+    })
+
+    // req.session.user = {
+    //     name: 'zhangsan',
+    //     password: 123456,
+    // }
+    // console.log('登录成功');
+    // res.redirect(301, 'http://localhost:3000/index');
     // res.send('登录成功');
 })
 
