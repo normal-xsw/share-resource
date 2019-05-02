@@ -4,50 +4,105 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            .wrapper {
+                background-color: #00b4ef;
+                height: 100vh;
+            }
+            .form {
+                position: absolute;
+                left: 50%;
+                top: 30%;
+                transform: translateX(-225px);
+                width: 450px;
+                /* height: 145px; */
+                background-color: #fff;
+                border-radius: 20px;
+            }
+            .row {
+                display: flex;
+                justify-content: flex-start;
+                height: 35px;
+                width: 400px;
+                margin: 20px auto;
+            }
+            .row > div {
+                width: 150px;
+                font-size: 20px;
+                line-height:35px;
+                text-align: right;
+            } 
+            input {
+                width: 250px;
+                font-size: 18px;
+                border-radius: 5px;
+                outline: none;
+                border: 1px solid black;
+            }
+            .submit {
+                margin: 0 auto;
+                background-color: darkkhaki;
+            }
+            .warn {
+                border: 1px solid red;
+            }
+            .center {
+                text-align: center;
+            }
+       
+        </style>
+        <script src="./js/jquery.min.js"></script>
     </head>
     <body>
-        <form>
-            <input type="text" name="username" id="username">
-            <input type="password" name="password" id="password">
-            <button type="submit" value="登录" id="submit">登录</button>
-        </form>
+        <div class="wrapper">
+            <form action="xxxlogin" method="post" class="form">
+                <h1 class="center">用戶登錄</h1>
+                <div class="row">
+                    <div>賬號：</div>
+                    <input type="text" id="username" name="username" required="required" value="111">
+                </div>
+                <div class="row">
+                    <div>密碼：</div>
+                    <input type="password" id="password" name="password" required="required">
+                </div>
+                <div class="row">
+                    <div></div>
+                    <input type="submit" class="submit" id="submit">
+                </div>
+            </form>
+        </div>
     </body>
     <script>
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
-        const submit = document.getElementById('submit');
+        const username_dom = document.getElementById('username');
+        const password_dom = document.getElementById('password');
+        const submit_dom = document.getElementById('submit');
 
-        submit.addEventListener('click', () => {
-            let xhr = null;
-            const url = 'http://localhost:3000/dologin';
-            const params = {
-            username: username.value,
-            password: password.value,
+        username_dom.addEventListener('blur', event => lengthRule(username_dom));
+        password_dom.addEventListener('blur', event => lengthRule(password_dom));
+
+        // submit_domm.addEventListener('click', event => {
+            
+        // })
+
+
+        /**********************************這是函數分割線*************************************************/
+        function lengthRule(dom) {
+            const className = 'warn';
+            if (dom.value.length < 6) {
+               addClass(dom, className);
+            } else {
+                removeClass(dom, className);
+            }
         }
-    
-            try {
-                xhr = new XMLHttpRequest();
-            } catch(e) {
-                xhr = new ActiveXObject('Microsoft.XMLHTTP');
-            }
 
-            xhr.open('post', url, true);
-            // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded'); // 把传递的数据当做字符串url
-            xhr.setRequestHeader('content-type', 'application/json');
-            xhr.send(JSON.stringify(params));
+        function addClass(dom, className) {
+            dom.classList.add(className);
+        }
 
-            xhr.onreadystatechange = function(){
-                console.log(xhr);
-                // debugger
-                if(xhr.readyState === 4) {
-                    console.log(xhr);
-                    // if (xhr.status === 200) {
-                    //     alert(xhr.responseText);
-                    // } else {
-                    //     // alert('error: ' + xhr.status);
-                    // }
-                }
+        function removeClass(dom, className) {
+            if (dom.classList.contains(className)) {
+                dom.classList.remove(className);
             }
-        })
+        }
     </script>
 </html>

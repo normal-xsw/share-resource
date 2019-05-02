@@ -6,24 +6,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style type="text/css">
             .wrapper {
-                background-color: #000;
+                background-color: #00b4ef;
                 height: 100vh;
             }
             .form {
                 position: absolute;
                 left: 50%;
-                top: 30%;
+                top: 20%;
                 transform: translateX(-225px);
                 width: 450px;
-                height: 280px;
                 background-color: #fff;
+                border-radius: 20px;
             }
             .row {
                 display: flex;
                 justify-content: flex-start;
                 height: 35px;
                 width: 400px;
-                margin: 10px auto;
+                margin: 20px auto;
             }
             .row > div {
                 width: 150px;
@@ -45,29 +45,23 @@
             .warn {
                 border: 1px solid red;
             }
-            /* .submit > input {
-                width: 250px;
-                height: 35px;
-                font-size: 18px;
-                margin: 10px auto;
-                border-radius: 5px;
-                outline: none;
-                border: 1px solid black;
-                background-color: darkkhaki;
-            } */
+            .center {
+                text-align: center;
+            }
         </style>
         <script src="./js/jquery.min.js"></script>
     </head>
     <body>
         <div class="wrapper">
             <form action="register" method="post" class="form">
+                <h1 class="center">用戶註冊</h1>
                 <div class="row">
                     <div>賬號：</div>
                     <input type="text" id="username" name="username" required="required" value="111">
                 </div>
                 <div class="row">
                     <div>密碼：</div>
-                    <input type="password" id="first-password" name="possword" required="required">
+                    <input type="password" id="first-password" name="password" required="required">
                 </div>
                 <div class="row">
                     <div>確認密碼：</div>
@@ -82,6 +76,7 @@
                     <input type="text" id="auth-code2">
                 </div>
                 <div class="row">
+                    <div></div>
                     <input type="submit" class="submit" id="submit">
                 </div>
             </form>
